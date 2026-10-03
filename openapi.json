@@ -1,0 +1,107 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "AQX Logistics Public Air Freight Rate API",
+    "version": "2026.1.0",
+    "description": "Enterprise JSON REST API for real-time cross-border air freight calculations from the United States (Los Angeles LAX Gateway) to 15 International Economies (GCC, UK, EU, Oceania) with automatic Universal $8.50/kg High-Density Tier detection.",
+    "contact": {
+      "name": "AQX Logistics Support",
+      "url": "https://aqxlogistics.com"
+    }
+  },
+  "servers": [
+    {
+      "url": "https://aqxlogistics.com",
+      "description": "Production Edge API (Hostinger Edge CDN)"
+    }
+  ],
+  "paths": {
+    "/api/rates": {
+      "get": {
+        "summary": "Calculate Landed Air Freight Cost",
+        "description": "Returns calculated air freight cost, DDP taxes, and active pricing tier based on weight and package dimensions.",
+        "parameters": [
+          {
+            "name": "weight",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "number"
+            },
+            "example": 10.0
+          },
+          {
+            "name": "country",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "example": "SA"
+          },
+          {
+            "name": "length",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "number"
+            },
+            "example": 10
+          },
+          {
+            "name": "width",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "number"
+            },
+            "example": 10
+          },
+          {
+            "name": "height",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "number"
+            },
+            "example": 10
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful rate calculation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "success"
+                    },
+                    "ratePerKg": {
+                      "type": "number",
+                      "example": 8.5
+                    },
+                    "tierName": {
+                      "type": "string",
+                      "example": "High-Density Universal Cargo Tier ($8.50/kg)"
+                    },
+                    "chargeableWeightKg": {
+                      "type": "number",
+                      "example": 10.0
+                    },
+                    "totalUSD": {
+                      "type": "number",
+                      "example": 97.75
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
